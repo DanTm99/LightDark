@@ -8,5 +8,7 @@ You will need:
 
 # How to Use
 Run model.py
+
 Generate data by choosing "Train"
+
 Generate data and view predictions by choosing "Use"
