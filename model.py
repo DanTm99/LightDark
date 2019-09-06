@@ -84,13 +84,6 @@ def hexcode_to_normalised_array(hexcode):
     return [int(hexcode.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4)]
 
 
-# def prediction_from_colours(model, colours):
-#     numpy.asarray([hexcode_to_normalised_array(colour) for colour in colours])
-
-
 def prediction_from_colour(model, colour):
     x = numpy.asarray([hexcode_to_normalised_array(colour)])
     return model.predict(x)[0][0]
-
-
-print(prediction_from_colour(load_newest_model(), "#000000"))
