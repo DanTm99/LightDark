@@ -1,11 +1,11 @@
-import glob
 import json
 import os
+from glob import glob
 
-import numpy
 from keras.layers import *
 from keras.models import Sequential
 from keras.models import load_model
+from numpy import asarray
 
 TRAINING_DATA_FILE_NAME = "colour_data.json"
 
@@ -24,7 +24,7 @@ def delete_and_replace_model(new_model):
 def rename_and_replace_model(new_model):
     if os.path.exists("model.h5"):
         highest_model_number = 0
-        for filename in glob.glob("model_old*.h5"):
+        for filename in glob("model_old*.h5"):
             model_number = int(filename[9:-3])
             if model_number < highest_model_number:
                 highest_model_number = model_number
@@ -65,7 +65,7 @@ def load_and_preprocess_data():
         colours.append(hexcode_to_normalised_array(colour))
         results.append(float(colour_data[colour]))
 
-    return [numpy.asarray(colours), numpy.asarray(results)]
+    return [asarray(colours), asarray(results)]
 
 
 def new_trained_model(verbose=0):
@@ -85,5 +85,5 @@ def hexcode_to_normalised_array(hexcode):
 
 
 def prediction_from_colour(model, colour):
-    x = numpy.asarray([hexcode_to_normalised_array(colour)])
+    x = asarray([hexcode_to_normalised_array(colour)])
     return model.predict(x)[0][0]

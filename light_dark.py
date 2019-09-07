@@ -1,5 +1,5 @@
 import json
-import random
+from random import randint
 from tkinter import *
 
 import model
@@ -72,7 +72,7 @@ def write_colour_data(colour_data):
 
 
 def random_colour():
-    return '#%02X%02X%02X' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    return '#%02X%02X%02X' % (randint(0, 255), randint(0, 255), randint(0, 255))
 
 
 def get_dark_light_response():
