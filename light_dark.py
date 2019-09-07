@@ -115,10 +115,11 @@ def use():
     while loop:
         colour = random_colour()
 
-        prediction = round(model.prediction_from_colour(m, colour))
-        prediction_text = "dark" if prediction else "light"
+        prediction = model.prediction_from_colour(m, colour)
+        prediction_text = "dark" if round(prediction) else "light"
+        certainty = prediction if prediction > 0.5 else 1 - prediction
 
-        print("The neural network thinks this colour is {}".format(prediction_text))
+        print("The neural network thinks this colour is {}. It is {:.0%} certain".format(prediction_text, certainty))
 
         get_and_log_colour_response(colour)
 
