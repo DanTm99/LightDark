@@ -129,7 +129,7 @@ def use():
 
         get_and_log_colour_response(colour)
 
-        response = input("Options:\n[U]pdate Neural Network\n[Q]uit to main menu\n"
+        response = input("Options:\n[U]pdate then use Neural Network\n[Q]uit to main menu\n"
                          "Type anything else to continue without updating\n").lower()
 
         if response == "u":
