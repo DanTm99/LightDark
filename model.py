@@ -66,7 +66,7 @@ def load_and_preprocess_data():
 
     for colour in colour_data.keys():
         colours.append(hexcode_to_normalised_array(colour))
-        results.append(float(colour_data[colour]))
+        results.append(float(colour_data[colour] == "dark"))
 
     return [asarray(colours), asarray(results)]
 

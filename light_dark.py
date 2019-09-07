@@ -95,7 +95,7 @@ def get_and_log_colour_response(colour):
     show_colour(colour, window)
     thread.join()
 
-    colour_data[colour] = int(response == "d")  # 1 if response is d, 0 if l
+    colour_data[colour] = "dark" if response == "d" else "light"
     write_colour_data(colour_data)
 
     print("Response logged\n")
