@@ -104,7 +104,7 @@ def use():
     try:
         if variables_data[VARIABLES_COLOUR_DATA_CHANGE_NAME]:
             print("Updating model...")
-            model.rename_and_replace_model(model.new_trained_model(verbose=0))
+            model.delete_and_replace_model(model.new_trained_model(verbose=0))
             set_colour_data_change(False)
     except KeyError:
         print("No training data found. Train the neural network before using it.")
