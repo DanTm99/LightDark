@@ -107,14 +107,15 @@ def use():
 
     try:
         if variables_data[VARIABLES_COLOUR_DATA_CHANGE_NAME]:
-            print("Updating model...")
-            model.delete_and_replace_model(model.new_trained_model(verbose=0))
+            print("Updating neural network...")
+            model.delete_and_replace_model(model.new_trained_model())
             set_colour_data_change(False)
     except KeyError:
         print("No training data found. Train the neural network before using it.")
         loop = False
 
-    m = model.load_newest_model()
+    if loop:
+        m = model.load_newest_model()
 
     while loop:
         colour = random_colour()
@@ -127,7 +128,16 @@ def use():
 
         get_and_log_colour_response(colour)
 
-        loop = ("q" != input("[Q]uit main menu?\n(Type Q to return or hit enter to continue training)\n").lower())
+        response = input("Options:\n[U]pdate Neural Network\n[Q]uit to main menu\n"
+                         "Type anything else to continue without updating\n").lower()
+
+        if response == "u":
+            print("Updating neural network...")
+            model.delete_and_replace_model(model.new_trained_model())
+            m = model.load_newest_model()
+            set_colour_data_change(False)
+        elif response == "q":
+            loop = False
 
 
 def train():
@@ -141,7 +151,7 @@ def train():
 
         get_and_log_colour_response(colour)
 
-        loop = ("q" != input("[Q]uit main menu?\n(Type Q to return or hit enter to continue training)\n").lower())
+        loop = ("q" != input("[Q]uit main menu?\n(Type Q to return or hit enter to continue)\n").lower())
 
 
 while True:
