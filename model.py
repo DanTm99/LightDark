@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from glob import glob
 
@@ -6,8 +7,10 @@ from keras.layers import *
 from keras.models import Sequential
 from keras.models import load_model
 from numpy import asarray
+from tensorflow import get_logger
 
 TRAINING_DATA_FILE_NAME = "colour_data.json"
+get_logger().setLevel(logging.ERROR)
 
 
 def model_exists():
