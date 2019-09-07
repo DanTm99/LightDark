@@ -41,8 +41,9 @@ def create_new_model():
     model = Sequential()
     model.add(Dense(3, input_dim=3, activation="relu", name="layer_1"))
     model.add(Dense(2, activation="relu", name="layer_2"))
-    model.add(Dense(1, activation="linear", name="output_layer"))
-    model.compile(loss="mean_squared_error", optimizer="adam")
+    model.add(Dense(2, activation="softmax", name="output_layer"))
+
+    model.compile(loss="binary_crossentropy", optimizer="adam")
 
     return model
 
@@ -66,7 +67,7 @@ def load_and_preprocess_data():
 
     for colour in colour_data.keys():
         colours.append(hexcode_to_normalised_array(colour))
-        results.append(float(colour_data[colour] == "dark"))
+        results.append(colour_description_to_categorical(colour_data[colour]))
 
     return [asarray(colours), asarray(results)]
 
@@ -85,6 +86,10 @@ def load_newest_model():
 
 def hexcode_to_normalised_array(hexcode):
     return [int(hexcode.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+
+
+def colour_description_to_categorical(colour_data):
+    return [1.0, 0.0] if colour_data == "dark" else [0.0, 1.0]
 
 
 def prediction_from_colour(model, colour):
