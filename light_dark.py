@@ -1,4 +1,5 @@
 import json
+import threading
 from random import randint
 from tkinter import *
 
@@ -9,13 +10,8 @@ VARIABLES_FILE_NAME = "variables.json"
 VARIABLES_COLOUR_DATA_CHANGE_NAME = "colour_data_change"
 
 
-def do_nothing():
-    pass
-
-
 def show_colour(colour, window):
     window.title("Colour")
-    window.protocol("WM_DELETE_WINDOW", do_nothing)
     window.geometry("400x400")
     window.configure(background=colour)
     window.resizable(0, 0)
@@ -75,7 +71,7 @@ def random_colour():
     return '#%02X%02X%02X' % (randint(0, 255), randint(0, 255), randint(0, 255))
 
 
-def get_dark_light_response():
+def get_light_dark_response():
     response = input("Options:\n[D]ark\n[L]ight\n").lower()
     while response != "d" and response != "l":
         response = input("Invalid input. Type D for dark or L for light\n")
@@ -83,13 +79,21 @@ def get_dark_light_response():
     return response
 
 
+def light_dark_response(result):
+    result = get_light_dark_response()
+
+
 def get_and_log_colour_response(colour):
     colour_data = read_colour_data()
-    print("Do you think this colour is dark or light?\n(wait to respond)")
+    print("Do you think this colour is dark or light?")
 
     window = Tk()
+    response = ""
+    thread = threading.Thread(target=light_dark_response, args=(response,))
+    thread.start()
+
     show_colour(colour, window)
-    response = get_dark_light_response()
+    thread.join()
 
     colour_data[colour] = int(response == "d")  # 1 if response is d, 0 if l
     write_colour_data(colour_data)
