@@ -120,6 +120,7 @@ def use():
     while loop:
         colour = random_colour()
 
+        # noinspection PyUnboundLocalVariable
         prediction = model.prediction_from_colour(m, colour)
         prediction_text = "dark" if round(prediction) else "light"
         certainty = prediction if prediction > 0.5 else 1 - prediction
